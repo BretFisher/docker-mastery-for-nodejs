@@ -1,0 +1,32 @@
+{
+  "name": "result",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "./tests/tests.sh"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.6.2",
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "express": "^4.13.3",
+    "method-override": "^3.0.0",
+    "pg": "^7.9.0",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/async": "^2.4.1",
+    "@types/body-parser": "^1.17.0",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/express": "^4.16.1",
+    "@types/method-override": "0.0.31",
+    "@types/node": "^11.12.2",
+    "@types/pg": "^7.4.14",
+    "@types/socket.io": "^2.1.2",
+    "nodemon": "^1.18.10",
+    "phantomjs-prebuilt": "^2.1.16"
+  }
+}

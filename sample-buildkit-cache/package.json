@@ -1,0 +1,31 @@
+{
+  "name": "sample-buildkit-cache",
+  "version": "1.0.0",
+  "description": "a bunch of random dependencies to make npm install slow",
+  "author": "Bret Fisher",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "sails": "^1.1.0",
+    "sails-hook-apianalytics": "^2.0.3",
+    "sails-hook-organics": "^0.15.0",
+    "sails-hook-orm": "^2.1.1",
+    "sails-hook-sockets": "^1.5.5",
+    "@sailshq/connect-redis": "^3.2.1",
+    "@sailshq/socket.io-redis": "^5.2.0",
+    "@sailshq/lodash": "^3.10.3",
+    "@sailshq/eslint": "^4.19.3",
+    "@sailshq/htmlhint": "^0.9.16",
+    "@sailshq/lesshint": "^4.6.6",
+    "grunt": "1.0.1",
+    "sails-hook-grunt": "^3.1.0",
+    "lodash": "^4.17.5",
+    "strapi": "^3.0.0-alpha.24.1",
+    "strapi-hook-mongoose": "^3.0.0-alpha.24.1",
+    "babel-eslint": "^7.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-react": "^7.7.0"
+  }
+}

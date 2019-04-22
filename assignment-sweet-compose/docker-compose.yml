@@ -1,0 +1,43 @@
+version: '2.4'
+
+services:
+  redis:
+    image: redis:alpine
+    networks:
+      - frontend
+
+  db:
+    image: postgres:9.6
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  vote:
+    image: bretfisher/examplevotingapp_vote
+    ports:
+      - '5000:80'
+    networks:
+      - frontend
+
+  result:
+    build: 
+      context: result
+    ports:
+      - '5001:80'
+    networks:
+      - backend
+
+  worker:
+    image: bretfisher/examplevotingapp_worker:java
+    networks:
+      - frontend
+      - backend
+
+networks:
+    frontend:
+    backend:
+
+volumes:
+    db-data:
+

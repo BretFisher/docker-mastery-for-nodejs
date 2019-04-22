@@ -1,0 +1,71 @@
+version: '2.4'
+
+services:
+
+  my-ghost:
+    image: ghost:alpine
+    # BAD: just make your service name the desired DNS name. docker-compose
+    # handles the rest. If more then one replica are started, docker-compose
+    # creates aliases for them (DNSRR)
+    alias: ghost
+    # BAD: links are legacy. All compose services are added to a default
+    # bridge network and can freely talk via service name as their DNS name
+    links:
+      - db
+    ports:
+      - 8090:2368
+    # BAD: all ports are exposed in docker networks by default
+    # so this does nothing. Note it's still good to have EXPOSE
+    # in dockerfile for better documentation
+    expose:
+      - "2368"
+    # BAD: see networks at bottom. A default network is already created, making
+    # this one moot
+    networks:
+      - ghostnetwork
+    # BAD: if bind-mounting folders or files to host, always use relative file
+    # paths (starting with .). This makes your compose file reusable for others, 
+    # and won't break if you move your project around.
+    volumes:
+      - /my/path/on/host/:/var/lib/ghost
+    environment:
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: root
+      database__connection__password: YOURDBPASSWORDhere
+      database__connection__database: ghost
+
+  db:
+    image: mysql:5.7
+    # BAD: this is rarely needed. You can use docker-compose commands that 
+    # reconize service names, like `docker-compose logs db` or 
+    # `docker-compose exec db bash` so you rarely need to control container 
+    # directly from docker CLI (which is why people usually manually set 
+    # container_name
+    container_name: db
+    # BAD: see my-ghost:links above
+    links:
+      - my-ghost
+    # BAD: see networks at bottom. A default network is already created, making
+    # this one moot
+    networks:
+      - ghostnetwork
+    volumes:
+      # BAD: don't bind-mount databases to host OS. You'll get bad performance
+      # and many times it won't even work. Best to use named volumes.
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: YOURDBPASSWORDhere
+
+volumes:
+  db:
+    # BAD: no need to set driver local, it's default
+    driver: local
+
+networks:
+  # BAD: no need to create a network if only one is needed. By default
+  # compose creates a bridge network for all services to connect to
+  # custom networks are only needed if you need more then one, or special
+  # drivers or settings are needed
+  ghostnetwork:
+    driver: bridge

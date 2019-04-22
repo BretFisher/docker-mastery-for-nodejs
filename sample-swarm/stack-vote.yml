@@ -1,0 +1,129 @@
+version: '3.7'
+
+# for more swarm examples see 
+# https://github.com/BretFisher/dogvscat
+#
+# NOTE: requires port 80, 443, and 8080 open on Docker host
+# Use chrome with hostnames like http://result.localhost
+
+x-default-opts: 
+  &default-opts
+  logging:
+    options:
+      max-size: "1m"
+
+
+services:
+
+  traefik:
+    <<: *default-opts
+    image: traefik:1.7-alpine
+    networks:
+      - traefik-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: ingress # traefik dashboard
+    command:
+      - --docker
+      - --docker.swarmMode
+      - --docker.domain=traefik
+      - --docker.network=traefik-proxy
+      - --docker.watch
+      - --api
+      - --defaultentrypoints=http,https
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - traefik.port=8080
+        - traefik.frontend.rule=Host:traefik.localhost
+
+  vote:
+    <<: *default-opts
+    image: bretfisher/examplevotingapp_vote
+    networks:
+      - frontend
+      - traefik-proxy
+    deploy:
+      replicas: 2
+      labels:
+        - traefik.port=80
+        - traefik.frontend.rule=Host:vote.localhost
+
+  result:
+    <<: *default-opts
+    image: bretfisher/examplevotingapp_result:stoppable
+    networks:
+      - backend
+      - traefik-proxy
+    stop_grace_period: 5m
+    deploy:
+      replicas: 2
+      labels: [APP=VOTING]
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        order: start-first
+      labels:
+        - traefik.port=80
+        - traefik.frontend.rule=Host:result.localhost
+        - traefik.backend.loadbalancer.stickiness=true
+
+  worker:
+    <<: *default-opts
+    image: bretfisher/examplevotingapp_worker:java
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+  redis:
+    <<: *default-opts
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - frontend
+    deploy:
+      endpoint_mode: dnsrr
+
+  db:
+    <<: *default-opts
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      endpoint_mode: dnsrr
+
+networks:
+  frontend:
+  backend:
+  traefik-proxy:
+    name: traefik-proxy
+
+volumes:
+  db-data:
+  redis-data:

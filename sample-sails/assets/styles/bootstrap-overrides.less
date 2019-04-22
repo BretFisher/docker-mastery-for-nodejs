@@ -1,0 +1,151 @@
+/**
+ * This file is for overriding some default bootstrap styles.
+ *
+ * > NOTE THAT THIS FILE AFFECTS GLOBAL STYLES.
+ */
+
+// lesshint-disable
+* {
+  box-sizing: border-box;
+}
+// lesshint-enable
+
+img {
+  display: block;
+}
+
+// Get rid of weird background on <a>s with button styles
+.btn, [type='button'] {
+  -webkit-appearance: none;
+}
+
+// Custom link styles within bodies of text
+h1, h2, h3, h4, h5, h6, p, li, blockquote, label {
+  >a:not(.btn), small >a:not(.btn) {
+    color: @brand;
+    border-bottom: 1px solid @text-normal;
+    &:hover {
+      text-decoration: none;
+      color: @text-normal;
+    }
+  }
+}
+
+blockquote {
+  border-left: 3px solid @border-lt-gray;
+  padding-left: 20px;
+}
+
+// Custom modal styles
+.modal-backdrop {
+  background-color: @accent-white;
+  &.show {
+    opacity: 0.95;
+  }
+}
+.modal {
+  -webkit-overflow-scrolling: touch;//« makes this actually scrollable on certain phones
+  .petticoat {
+    position: fixed;
+    width: 100%;
+    height: 75px;// should cover topbar
+    z-index: 50;
+    left: 0px;
+    top: 0px;
+    background-color: @accent-white;
+  }
+  .modal-dialog {
+    z-index: 100;
+    position: relative;
+    max-width: 700px;
+  }
+  .modal-content {
+    max-width: 700px;
+    border-radius: 0px;
+    border-color: @accent-white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
+    .modal-header {
+      border-bottom: none;
+      display: block;
+      position: relative;
+      text-align: center;
+      padding-bottom: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+      padding-top: 0px;
+      .modal-close-button {
+        .btn-reset();
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        background-image: url('/images/icon-close.png');
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.8;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .modal-title {
+        font-weight: @bold;
+      }
+      .modal-intro {
+        margin-left: auto;
+        margin-right: auto;
+        color: @text-muted;
+        margin-bottom: 20px;
+      }
+      hr {
+        margin-top: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        width: 100px;
+        height: 2px;
+        border-top: 2px solid @brand;
+      }
+    }
+    .modal-body {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 0px;
+      padding-right: 0px;
+      .section-heading {
+        margin-top: 25px;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid @border-lt-gray;
+      }
+    }
+    .modal-footer {
+      padding-top: 25px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+      border-top: 1px solid @border-lt-gray;
+      margin-top: 10px;
+      &.no-border {
+        border-top: 0px;
+        padding-top: 10px;
+        margin-top: 0px;
+      }
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .modal-content {
+      .modal-header {
+        .modal-close-button {
+          right: -20px;
+          top: -45px;
+        }
+      }
+    }
+  }
+}

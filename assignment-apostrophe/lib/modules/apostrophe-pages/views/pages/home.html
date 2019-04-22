@@ -1,0 +1,17 @@
+{#
+  This is an example home page template. It inherits and extends a layout template
+  that lives in the top-level views/ folder for convenience
+#}
+
+{% extends "layout.html" %}
+
+{% block main %}
+  <div class="main-content">
+    <h3>Hello world!
+      {% if not data.user %}
+        <a class="login-link" href="/login">Login</a>
+      {% endif %}
+    </h3>
+    <p>This is a very bare bones Apostrophe project. Now, get to work and make a real website!</p>
+  </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+version: '2.4'
+# this only shows dependency relationships
+# it won't wait for db to be ready before starting node
+
+services:
+  node:
+    image: node
+    depends_on:
+      - db
+  db:
+    image: postgres

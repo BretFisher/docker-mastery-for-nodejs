@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Settings specific to the 'master' deployment target.
+# USER is the ssh user, SERVER is the ssh host. USER should
+# match the USER setting in /opt/stagecoach/settings on
+# the server
+
+USER=myuser
+SERVER=myserver.com
+

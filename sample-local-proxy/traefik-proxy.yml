@@ -1,0 +1,34 @@
+version: '2.4'
+
+services:
+
+  traefik:
+    image: traefik:1.7-alpine
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80"
+    command:
+      - --docker
+      - --docker.domain=traefik
+      - --docker.watch
+      - --api
+      - --defaultentrypoints=http,https
+    labels:
+      - traefik.port=8080
+      - traefik.frontend.rule=Host:traefik.localhost,traefik.vcap.me
+
+  nginx:
+    image: nginx
+    labels:
+      - traefik.port=80
+      - traefik.frontend.rule=Host:nginx.localhost,nginx.vcap.me
+
+  ghost:
+    image: ghost
+    labels:
+      - traefik.port=2368
+      - traefik.frontend.rule=Host:ghost.localhost,ghost.vcap.me
+ 
+
+

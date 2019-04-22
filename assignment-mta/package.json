@@ -1,0 +1,16 @@
+{
+  "name": "assignment-mta",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bret Fisher",
+  "license": "MIT",
+  "dependencies": {
+    "gm": "^1.23.1",
+    "is-image": "^2.0.0",
+    "winston": "^3.2.1"
+  }
+}

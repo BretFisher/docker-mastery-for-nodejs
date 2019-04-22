@@ -1,0 +1,46 @@
+#!/bin/bash
+
+TARGET="$1"
+if [ -z "$TARGET" ]; then
+  echo "Usage: ./scripts/sync-up production"
+  echo "(or as appropriate)"
+  echo
+  echo "THIS WILL CLOBBER EVERYTHING ON THE"
+  echo "TARGET SITE. MAKE SURE THAT IS WHAT"
+  echo "YOU WANT!"
+  exit 1
+fi
+
+read -p "THIS WILL CRUSH THE SITE'S CONTENT ON $TARGET. Are you sure? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
+
+source deployment/settings || exit 1
+source "deployment/settings.$TARGET" || exit 1
+
+#Enter the Mongo DB name (should be same locally and remotely).
+dbName=$PROJECT
+
+#Enter the Project name (should be what you called it for stagecoach).
+projectName=$PROJECT
+
+#Enter the SSH username/url for the remote server.
+remoteSSH="-p $SSH_PORT $USER@$SERVER"
+rsyncTransport="ssh -p $SSH_PORT"
+rsyncDestination="$USER@$SERVER"
+
+echo "Syncing MongoDB"
+mongodump -d $dbName -o /tmp/mongodump.$dbName &&
+echo rsync -av -e "$rsyncTransport" /tmp/mongodump.$dbName/ $rsyncDestination:/tmp/mongodump.$dbName &&
+rsync -av -e "$rsyncTransport" /tmp/mongodump.$dbName/ $rsyncDestination:/tmp/mongodump.$dbName &&
+rm -rf /tmp/mongodump.$dbName &&
+# noIndexRestore increases compatibility between 3.x and 2.x,
+# and Apostrophe will recreate the indexes correctly at startup
+ssh $remoteSSH mongorestore --noIndexRestore --drop -d $dbName /tmp/mongodump.$dbName/$dbName &&
+echo "Syncing Files" &&
+rsync -av --delete -e "$rsyncTransport" ./public/uploads/ $rsyncDestination:/opt/stagecoach/apps/$projectName/uploads &&
+echo "Synced up to $TARGET"
+echo "YOU MUST RESTART THE SITE ON $TARGET TO REBUILD THE MONGODB INDEXES."

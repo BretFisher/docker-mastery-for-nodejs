@@ -1,0 +1,11 @@
+version: '2.4'
+
+services:
+  hapi:
+    build: .
+    init: true
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/node/app
+      - /node/app/node_modules

@@ -1,0 +1,12 @@
+version: '2.4'
+
+services:
+  express:
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=sample-express:*
+

@@ -1,0 +1,14 @@
+version: '2.4'
+
+services:
+  web:
+    init: true
+    build: 
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/opt/app:delegated
+      - /opt/app/node_modules
+

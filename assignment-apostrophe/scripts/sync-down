@@ -1,0 +1,34 @@
+#!/bin/sh
+
+TARGET="$1"
+if [ -z "$TARGET" ]; then
+  echo "Usage: ./scripts/sync-down production"
+  echo "(or as appropriate)"
+  exit 1
+fi
+
+source deployment/settings || exit 1
+source "deployment/settings.$TARGET" || exit 1
+
+#Enter the Mongo DB name (should be same locally and remotely).
+dbName=$PROJECT
+
+#Enter the Project name (should be what you called it for stagecoach).
+projectName=$PROJECT
+
+#Enter the SSH username/url for the remote server.
+remoteSSH="-p $SSH_PORT $USER@$SERVER"
+rsyncTransport="ssh -p $SSH_PORT"
+rsyncDestination="$USER@$SERVER"
+
+echo "Syncing MongoDB"
+ssh $remoteSSH mongodump -d $dbName -o /tmp/mongodump.$dbName &&
+rsync -av -e "$rsyncTransport" $rsyncDestination:/tmp/mongodump.$dbName/ /tmp/mongodump.$dbName  &&
+ssh $remoteSSH rm -rf /tmp/mongodump.$dbName &&
+# noIndexRestore increases compatibility between 3.x and 2.x,
+# and Apostrophe will recreate the indexes correctly at startup
+mongorestore --noIndexRestore --drop -d $dbName /tmp/mongodump.$dbName/$dbName &&
+echo "Syncing Files" &&
+rsync -av --delete -e "$rsyncTransport" $rsyncDestination:/opt/stagecoach/apps/$projectName/uploads/ ./public/uploads  &&
+echo "Synced down from $TARGET"
+echo "YOU MUST RESTART THE SITE LOCALLY TO REBUILD THE MONGODB INDEXES."

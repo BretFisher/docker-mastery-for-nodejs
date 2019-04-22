@@ -1,0 +1,29 @@
+version: '2.4'
+
+services:
+  api:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+    volumes:
+      - .:/app
+    ports:
+      - 3030:1337
+    command: strapi start
+    environment:
+      - DATABASE_CLIENT=mongo
+      - DATABASE_HOST=mongo
+      - DATABASE_PORT=27017
+      - DATABASE_NAME=strapi
+      - NODE_ENV=development
+
+  mongo:
+    image: mongo
+    volumes:
+      - mongo:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=strapi
+
+volumes:
+  mongo:

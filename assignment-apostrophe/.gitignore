@@ -1,0 +1,17 @@
+package-lock.json
+/locales
+npm-debug.log
+/data
+/public/uploads
+/public/apos-minified
+/data/temp/uploadfs
+node_modules
+# This folder is created on the fly and contains symlinks updated at startup (we'll come up with a Windows solution that actually copies things)
+/public/modules
+# We don't commit CSS, only LESS
+/public/css/*.css
+/public/css/*.map
+# Don't commit masters generated on the fly at startup, these import all the rest
+/public/css/master-*.less
+.jshintrc
+/public/js/_site-compiled.js

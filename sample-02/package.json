@@ -1,0 +1,21 @@
+{
+  "name": "sample-02",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "upgrade-interactive": "npm-check --update"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "~1.4.3",
+    "debug": "^4.1.0",
+    "express": "^4.16.4",
+    "hbs": "~4.0.1",
+    "morgan": "^1.9.1",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "npm-check": "^5.9.0"
+  }
+}

@@ -1,0 +1,34 @@
+version: '2.4'
+# GOOD: stick with 2.x versions if you aren't using this yaml file with swarm/k8s
+
+services:
+
+  ghost:
+    image: ghost:alpine
+    ports:
+      - 8090:2368
+    # GOOD: v2 compose file supports depends_on, it's useful for establishing 
+    # dependencies. For true wait-for-it style, you need a healthcheck: and 
+    # condition: object
+    depends_on:
+      - db
+    # GOOD: 
+    volumes:
+      - ./content:/var/lib/ghost/content:delegated
+    environment:
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: root
+      database__connection__password: YOURDBPASSWORDhere
+      database__connection__database: ghost
+
+  db:
+    image: mysql:5
+    volumes:
+      #GOOD: created a named volume so our data is kept between docker-compose ups
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: YOURDBPASSWORDhere
+
+volumes:
+  db:

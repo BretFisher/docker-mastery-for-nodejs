@@ -1,0 +1,20 @@
+version: '2.4'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+
+  nginx:
+    image: nginx
+    environment:
+      - VIRTUAL_HOST=dude.localhost
+
+  ghost:
+    image: ghost
+    environment:
+      - VIRTUAL_HOST=ghost.localhost
+

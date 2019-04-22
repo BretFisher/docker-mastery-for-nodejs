@@ -1,0 +1,26 @@
+version: '2.4'
+
+services:
+
+  ghost:
+    image: ghost:alpine
+    ports:
+      - 8090:2368
+    environment:
+      # see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: root
+      database__connection__password: YOURDBPASSWORDhere
+      database__connection__database: ghost
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: YOURDBPASSWORDhere
+
+volumes:
+  db:
+
