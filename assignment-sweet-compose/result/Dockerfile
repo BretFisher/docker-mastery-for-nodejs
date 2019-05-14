@@ -1,11 +1,9 @@
-FROM node:8.9-alpine
+FROM node:8.16-alpine
 
-RUN mkdir -p /app
 WORKDIR /app
 
 RUN npm install -g nodemon
-RUN npm config set registry https://registry.npmjs.org
-COPY package.json /app/package.json
+COPY package*.json /app/
 RUN npm install \
  && npm ls \
  && npm cache clean --force \
