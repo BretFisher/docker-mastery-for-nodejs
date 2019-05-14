@@ -11,9 +11,9 @@
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
-    "@types/node": "^11.11.4",
-    "nodemon": "^1.18.10",
-    "ts-node-dev": "^1.0.0-pre.32",
-    "typescript": "^3.3.4000"
+    "@types/node": "^11.13.10",
+    "nodemon": "^1.19.0",
+    "ts-node-dev": "^1.0.0-pre.39",
+    "typescript": "^3.4.5"
   }
 }

@@ -2,5 +2,5 @@
     "watch": ["src"],
     "ext": "ts",
     "ignore": ["src/**/*.spec.ts"],
-    "exec": "node --inspect=0.0.0.0:9229 -r ts-node/register ./dist/app.js"
+    "exec": "node --inspect=0.0.0.0:9229 -r ts-node/register ./src/app.ts"
 }
