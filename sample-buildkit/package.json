@@ -9,18 +9,18 @@
     "test2": "cross-env NODE_ENV=test PORT=8081 mocha --timeout 10000 --exit --inspect=0.0.0.0:9230"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "cookie-parser": "~1.4.3",
-    "debug": "^4.1.0",
-    "express": "^4.16.4",
-    "hbs": "~4.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "hbs": "^4.0.4",
     "morgan": "^1.9.1",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chai-http": "^4.2.0",
+    "chai-http": "^4.3.0",
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.19.1"
   }
 }
