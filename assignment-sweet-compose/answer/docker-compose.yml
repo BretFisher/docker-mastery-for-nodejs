@@ -1,0 +1,88 @@
+# this is the answer file for Assignment "Building a Sweet Compose File"
+# you can run it from this answer directory with `docker-compose up`
+# the bind-mount and build paths are changed from the Answer video
+# to work from this subdir
+
+version: '2.4'
+
+services:
+
+  traefik:
+    image: traefik:1.7-alpine
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:80"
+    command:
+      - --docker
+      - --docker.domain=traefik
+      - --docker.watch
+      - --api
+      - --defaultentrypoints=http,https
+    labels:
+      - traefik.port=8080
+      - traefik.frontend.rule=Host:traefik.localhost
+    networks:
+      - frontend
+      - backend
+
+  redis:
+    image: redis:alpine
+    networks:
+      - frontend
+    healthcheck:
+      test: redis-cli ping
+
+  db:
+    image: postgres:9.6
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: pg_isready -h 127.0.0.1
+
+  vote:
+    image: bretfisher/examplevotingapp_vote
+    networks:
+      - frontend
+    depends_on:
+      redis:
+        condition: service_healthy
+    labels:
+      - traefik.port=80
+      - traefik.frontend.rule=Host:vote.localhost
+
+  result:
+    build:
+      context: ../result
+    command: nodemon index.js
+    volumes:
+      - ../result:/app
+    networks:
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - traefik.port=80
+      - traefik.frontend.rule=Host:result.localhost
+
+  worker:
+    image: bretfisher/examplevotingapp_worker:java
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+networks:
+    frontend:
+    backend:
+
+volumes:
+    db-data:
+
