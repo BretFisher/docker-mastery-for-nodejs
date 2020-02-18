@@ -23,6 +23,8 @@ services:
 
   postgres:
     image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
       test: pg_isready -U postgres -h 127.0.0.1
 
