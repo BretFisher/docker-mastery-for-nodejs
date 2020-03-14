@@ -16,6 +16,6 @@
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
-    "npm-check": "^5.9.0"
+    "npm-check": "^5.9.2"
   }
 }
