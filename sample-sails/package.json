@@ -6,20 +6,20 @@
   "keywords": [],
   "dependencies": {
     "@sailshq/connect-redis": "^3.2.1",
-    "@sailshq/lodash": "^3.10.3",
+    "@sailshq/lodash": "^3.10.4",
     "@sailshq/socket.io-redis": "^5.2.0",
     "sails": "^1.2.3",
     "sails-hook-apianalytics": "^2.0.3",
-    "sails-hook-organics": "^0.15.0",
+    "sails-hook-organics": "^1.1.0",
     "sails-hook-orm": "^2.1.1",
-    "sails-hook-sockets": "^1.5.5"
+    "sails-hook-sockets": "^2.0.0"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",
     "@sailshq/htmlhint": "^0.9.16",
     "@sailshq/lesshint": "^4.6.6",
     "grunt": "^1.0.4",
-    "sails-hook-grunt": "^3.1.0"
+    "sails-hook-grunt": "^4.0.1"
   },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
