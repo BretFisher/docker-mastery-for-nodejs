@@ -3,6 +3,7 @@
 
 FROM node:10-slim as prod
 ENV NODE_ENV=production
+WORKDIR /app
 COPY package*.json ./
 RUN npm install --only=production \
     && npm cache clean --force
