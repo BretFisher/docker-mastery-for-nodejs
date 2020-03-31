@@ -1,5 +1,7 @@
 FROM node:10-alpine
 
+RUN apk add --update curl
+
 EXPOSE 3000
 
 WORKDIR /usr/src/app
