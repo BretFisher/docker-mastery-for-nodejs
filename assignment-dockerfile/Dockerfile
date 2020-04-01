@@ -31,7 +31,7 @@ RUN npm install \
 COPY --chown=node:node . .
 
 # run tini
-ENTRYPOINT ["/sbin/tini", "--"]
+# ENTRYPOINT ["/sbin/tini", "--"]
 
 # run app
 CMD ["node", "./app.js"]

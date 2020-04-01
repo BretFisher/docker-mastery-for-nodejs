@@ -7,6 +7,18 @@ const server = Hapi.server({
     host: '0.0.0.0'
 });
 
+const shutdown = async () => {
+    try {
+        await server.stop({ timeout: 10000 });
+        process.exitCode = 0;
+        process.exit();
+    } catch (e) {
+        console.error(e);
+        process.exitCode = 1;
+        process.exit();
+    }
+};
+
 server.route({
     method: 'GET',
     path: '/',
@@ -36,6 +48,18 @@ process.on('unhandledRejection', (err) => {
 
     console.log(err);
     process.exit(1);
+});
+
+// ctrl+c
+process.on('SIGINT', () => {
+    console.log('SIGINT fired');
+    shutdown();
+});
+
+// docker container stop
+process.on('SIGTERM', () => {
+    console.log('SIGTERM fired');
+    shutdown();
 });
 
 init();
