@@ -13,7 +13,7 @@ CMD ["node", "./bin/www"]
 FROM prod as dev
 ENV NODE_ENV=development
 RUN npm install --only=development && npm cache clean --force
-CMD ["npm", "run", "dev"]
+CMD ["node_modules/nodemon/bin/nodemon.js", "./bin/www", "--inspect=0.0.0.0:9229"]
 
 FROM dev as test
 ENV NODE_ENV=development
