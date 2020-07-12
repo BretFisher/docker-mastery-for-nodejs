@@ -1,0 +1,10 @@
+version: '3.1'
+
+services:
+    app:
+        image: image-app:latest
+        volumes:
+            - ./in:/app/in
+            - ./out:/app/out
+        environment:
+            CHARCOAL_FACTOR: 10
