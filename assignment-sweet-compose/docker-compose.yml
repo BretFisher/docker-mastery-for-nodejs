@@ -1,13 +1,37 @@
 version: '2.4'
 
 services:
+
+  traefik:
+    image: traefik:1.7-alpine
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80"
+    command:
+      - --docker
+      - --docker.domain=traefik
+      - --docker.watch
+      - --api
+      - --defaultentrypoints=http,https
+    labels:
+      - traefik.port=8080
+      - traefik.frontend.rule=Host:traefik.test
+    networks:
+      - frontend
+      - backend
+
   redis:
     image: redis:alpine
+    healthcheck:
+      test: redis-cli ping
     networks:
       - frontend
 
   db:
     image: postgres:9.6
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
@@ -17,24 +41,44 @@ services:
 
   vote:
     image: bretfisher/examplevotingapp_vote
-    ports:
-      - '5000:80'
     networks:
       - frontend
+    depends_on: 
+      redis:
+        condition: service_healthy
+    labels:
+      - traefik.port=80
+      - traefik.frontend.rule=Host:vote.test
 
   result:
     build: 
-      context: result
+      context: ./result
+    command: nodemon --inspect=0.0.0.0:9229 server.js
+    volumes:
+      - ./result:/app
     ports:
-      - '5001:80'
+      - '9229:9229'
     networks:
       - backend
+    labels:
+      - traefik.port=80
+      - traefik.frontend.rule=Host:result.test
+    environment: 
+      - NODE_ENV=development
+    depends_on: 
+      db:
+        condition: service_healthy
 
   worker:
     image: bretfisher/examplevotingapp_worker:java
     networks:
       - frontend
       - backend
+    depends_on: 
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
 networks:
     frontend:
