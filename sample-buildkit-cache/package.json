@@ -18,7 +18,7 @@
     "eslint-plugin-react": "^7.7.0",
     "express": "^4.17.1",
     "grunt": "^1.0.4",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "sails": "^1.1.0",
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-grunt": "^4.0.1",
