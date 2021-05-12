@@ -25,7 +25,7 @@
     "sails-hook-organics": "^1.1.0",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^2.0.0",
-    "strapi": "^3.0.0-alpha.24.1",
+    "strapi": "^3.2.5",
     "strapi-hook-mongoose": "^3.0.0-alpha.24.1"
   }
 }
