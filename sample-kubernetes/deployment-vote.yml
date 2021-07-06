@@ -61,6 +61,9 @@ metadata:
   # labels:
   #   app: db
 spec:
+  selector:
+    matchLabels:
+      app: db
   template:
     metadata:
       labels:
@@ -73,6 +76,8 @@ spec:
           env:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
           ports:
             - containerPort: 5432
               name: db
@@ -121,6 +126,9 @@ metadata:
   labels:
     app: result
 spec:
+  selector:
+    matchLabels:
+      app: result
   replicas: 2
   template:
     metadata:
@@ -129,7 +137,7 @@ spec:
     spec:
       containers:
       - name: result
-        image: bretfisher/examplevotingapp_result:stop
+        image: bretfisher/examplevotingapp_result
         ports:
         - containerPort: 80
           name: result
@@ -158,6 +166,9 @@ metadata:
   labels:
     app: vote
 spec:
+  selector:
+    matchLabels:
+      app: vote
   replicas: 2
   template:
     metadata:
@@ -191,6 +202,9 @@ metadata:
     app: worker
   name: worker
 spec: 
+  selector:
+    matchLabels:
+      app: worker
   replicas: 1
   template: 
     metadata: 
@@ -199,6 +213,6 @@ spec:
     spec: 
       containers: 
         - 
-          image: bretfisher/examplevotingapp_worker:java
+          image: bretfisher/examplevotingapp_worker
           name: worker
 

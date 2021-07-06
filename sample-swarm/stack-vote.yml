@@ -65,7 +65,7 @@ services:
 
   result:
     <<: *default-opts
-    image: bretfisher/examplevotingapp_result:stoppable
+    image: bretfisher/examplevotingapp_result
     networks:
       - backend
       - traefik-proxy
@@ -84,7 +84,7 @@ services:
 
   worker:
     <<: *default-opts
-    image: bretfisher/examplevotingapp_worker:java
+    image: bretfisher/examplevotingapp_worker
     networks:
       - frontend
       - backend

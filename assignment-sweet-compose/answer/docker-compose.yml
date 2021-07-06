@@ -71,7 +71,7 @@ services:
       - traefik.frontend.rule=Host:result.localhost
 
   worker:
-    image: bretfisher/examplevotingapp_worker:java
+    image: bretfisher/examplevotingapp_worker
     networks:
       - frontend
       - backend
