@@ -1,0 +1,32 @@
+# use one or the other of these
+# assuming this is localhost dev/test use
+# the first is type LoadBalancer which works in Docker Desktop
+# the 2nd works for microk8s and minikube on host IP:30080
+# Using both in Docker Desktop is fine
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+  selector:
+    app: traefik
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-np
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+      nodePort: 30080
+  selector:
+    app: traefik

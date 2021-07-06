@@ -1,0 +1,54 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`traefik.bret.lol`)
+    kind: Rule
+    services:
+    - name: api@internal
+      kind: TraefikService
+      port: 8080
+    # middlewares:
+      # - name: myips
+---
+
+
+# this is for TLS, but you'll need to implement Let's Encrypt
+# or your own cert
+
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+  # name: traefik-dashboardtls
+  # namespace: default
+# spec:
+  # entryPoints:
+    # - websecure
+  # routes:
+  # - match: Host(`traefik.yoursite.com`)
+    # kind: Rule
+    # services:
+    # - name: api@internal
+      # kind: TraefikService
+      # port: 8080
+    # middlewares:
+      # - name: myips
+  # tls:
+    # certResolver: myresolver
+# ---
+
+# for better security, you'll want to restrict the traefik dashboard
+# to your IP or add authenication
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+  # name: myips
+# spec:
+  # ipWhiteList:
+    # sourceRange:
+      # - 71.120.138.34
