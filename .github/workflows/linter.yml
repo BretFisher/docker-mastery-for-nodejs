@@ -14,4 +14,4 @@ jobs:
     uses: bretfisher/super-linter-workflow/.github/workflows/super-linter.yaml@main
     with:
       devops-only: true
-      #filter-regex-exclude: .*compose-sample-3/html/.*
+      filter-regex-exclude: .*assignment-apostrophe/.*,.*assignment-sweet-compose/result/.*,.*sample-result-orchestration/.*,.*assignment-mta/.*,.*sample-sails/.*,*test*

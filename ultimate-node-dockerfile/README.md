@@ -35,18 +35,18 @@ into other stages.
 * Add Best Practices from earlier section, including:
   * Enable BuildKit and try a build.
   * Add tini to images so containers will receive shutdown signals.
-  * Enable the non-root node user for all dev/prod images.
+  * Enable the non-root Node.js user for all dev/prod images.
   * You might need root user for test or scanning images depending
   on what you're doing (test and find out!)
 
 ## Things to test once finished to ensure it's working
 
-* Build all stages as their own tag. ultimatenode:test should be
-bigger then ultimatenode:prod
+* Build all stages as their own tag. `ultimatenode:test` should be
+bigger then `ultimatenode:prod`
 * All builds should finish.
 * Run dev/test/prod images, and ensure they start as expected.
 * `docker-compose up` should work and you can vote at
-http://localhost:5000 and see results at http://localhost:5001.
+`http://localhost:5000` and see results at `http://localhost:5001`.
 * Ensure prod image doesn't have unnecessary files by running
 `docker run -it <imagename>:prod bash` and checking it:
   * ls contents of `/app/node_modules/.bin`, it should not contain

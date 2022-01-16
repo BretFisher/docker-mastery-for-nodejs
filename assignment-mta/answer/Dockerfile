@@ -2,7 +2,10 @@
 # move it up a directory for it to work
 FROM node:8
 
-RUN apt-get update && apt-get install -y graphicsmagick
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    graphicsmagick \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

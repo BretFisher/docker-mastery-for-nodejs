@@ -2,12 +2,13 @@ FROM node:8-slim
 
 # NOTE: these apt dependencies are only needed
 # for testing. they shouldn't be in production
-RUN apt-get update -qq && apt-get install -qy \ 
-    ca-certificates \
+RUN apt-get update -qq \
+    && apt-get install -qy --no-install-recommends \
     bzip2 \
+    ca-certificates \
     curl \
     libfontconfig \
-    --no-install-recommends
+    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 80
 

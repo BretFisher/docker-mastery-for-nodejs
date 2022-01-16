@@ -1,3 +1,4 @@
+---
 version: '3.7'
 
 # for more swarm examples see 
@@ -71,8 +72,7 @@ services:
       - traefik-proxy
     stop_grace_period: 5m
     deploy:
-      replicas: 2
-      labels: [APP=VOTING]
+      replicas: 2 
       update_config:
         parallelism: 1
         failure_action: rollback

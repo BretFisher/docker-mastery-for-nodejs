@@ -1,11 +1,12 @@
 FROM node:8.9-slim
 
-RUN apt-get update -qq && apt-get install -qy \ 
+RUN apt-get update -qq 
+    && apt-get install -qy --no-install-recommends \ 
     ca-certificates \
     bzip2 \
     curl \
     libfontconfig \
-    --no-install-recommends
+    && rm -rf /var/lib/apt/lists/*
 RUN yarn global add phantomjs-prebuilt
 ADD . /app
 WORKDIR /app
