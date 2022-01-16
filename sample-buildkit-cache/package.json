@@ -19,7 +19,7 @@
     "express": "^4.17.2",
     "grunt": "^1.4.1",
     "lodash": "^4.17.21",
-    "sails": "^0.12.14",
+    "sails": "^1.5.2",
     "sails-hook-apianalytics": "^2.0.5",
     "sails-hook-grunt": "^5.0.0",
     "sails-hook-organics": "^2.2.0",
