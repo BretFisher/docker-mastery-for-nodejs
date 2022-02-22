@@ -3,7 +3,7 @@
 Just a sample app of how to run npm commands in docker compose, and how to initialize apps in compose.
 
 Typical compose workflow when running everything inside a container, and bind-mounting the source code
-and node_modules into the container: 
+and node_modules into the container:
 
 ```shell
 # this runs npm install inside the container, and the bind-mount will write the files back to the host
