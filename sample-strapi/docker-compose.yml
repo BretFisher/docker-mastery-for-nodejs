@@ -1,15 +1,17 @@
-version: '2.4'
-
+# version no longer needed
 services:
   api:
     build:
       context: .
       args:
         - NODE_ENV=development
+    # strapi v3 doesn't build on arm64 yet. Hardcode to amd64 (x86_64) for now
+    platform: linux/amd64
     volumes:
       - .:/app
     ports:
       - 3030:1337
+    # override the Dockerfile CMD for local development
     command: strapi start
     environment:
       - DATABASE_CLIENT=mongo
