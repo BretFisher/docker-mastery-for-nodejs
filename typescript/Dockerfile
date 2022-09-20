@@ -1,7 +1,7 @@
 # a base stage for all future stages
 # with only prod dependencies and
 # no code yet
-FROM node:10 as base
+FROM node:16-slim as base
 ENV NODE_ENV=production
 WORKDIR /app
 COPY package*.json ./

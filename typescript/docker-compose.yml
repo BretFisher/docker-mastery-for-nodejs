@@ -1,4 +1,6 @@
-version: '2.4'
+# version: '2.4'
+# versions no longer needed in docker compose as of 2020
+# all features are included from 2.x and 3.x versions
 
 services:
   ts:
