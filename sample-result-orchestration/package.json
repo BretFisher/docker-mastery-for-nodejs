@@ -28,7 +28,7 @@
     "@types/node": "^11.12.2",
     "@types/pg": "^7.4.14",
     "@types/socket.io": "^2.1.2",
-    "nodemon": "^1.18.10",
+    "nodemon": "^2.0.20",
     "phantomjs-prebuilt": "^2.1.16"
   }
 }
