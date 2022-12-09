@@ -9,10 +9,10 @@
     "test2": "cross-env NODE_ENV=test PORT=8081 mocha --timeout 10000 --exit --inspect=0.0.0.0:9230"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "hbs": "^4.1.0",
     "morgan": "^1.9.1",
     "serve-favicon": "^2.5.0"
