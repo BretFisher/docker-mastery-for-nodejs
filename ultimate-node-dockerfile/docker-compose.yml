@@ -1,13 +1,18 @@
-version: '2.4'
+# docker-compose is replaced with `docker compose`
+# compose file versions are replaced with "compose spec"
+# no version needed
+# version: '2.4'
 
 services:
   redis:
     image: redis:alpine
 
   db:
-    image: postgres:9.6
+    image: postgres:15-alpine
+    # we now need to set postgres user and password
     environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
     volumes:
       - db-data:/var/lib/postgresql/data
 
@@ -21,6 +26,10 @@ services:
   result:
     build: 
       context: .
+      dockerfile: ./answer/Dockerfile
+      # make sure there's a dev stage in Dockerfile
+      # then this will build and run that stage, which should end with: CMD ["nodemon", "server.js"]
+      target: dev
     ports:
       - '5001:80'
     volumes:
@@ -37,5 +46,4 @@ services:
       - db
 
 volumes:
-    db-data:
-
+  db-data:

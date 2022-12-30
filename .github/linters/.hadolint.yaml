@@ -3,6 +3,7 @@ ignored:
   - DL3003 #ignore that we use cd sometimes
   - DL3006 #image pin versions
   - DL3008 #apt pin versions
+  - DL3009 #apt pin cleanups
   - DL3012 #learning: multiple HEALTHCHECKs ok
   - DL3016 # npm pin versions
   - DL3018 #apk add pin versions
