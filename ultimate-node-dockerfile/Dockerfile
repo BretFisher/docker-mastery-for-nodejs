@@ -1,4 +1,4 @@
-FROM node:8-slim
+FROM node:18-slim
 
 # NOTE: these apt dependencies are only needed
 # for testing. they shouldn't be in production
