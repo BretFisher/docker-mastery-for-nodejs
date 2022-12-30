@@ -23,7 +23,7 @@ Goal: take the Dockerfile in this directory and make it the ULTIMATE for a combi
 
 ## BONUS
 
-* Add a security scanner to test stage and test it. Trivy (replaced microscanner) https://github.com/aquasecurity/trivy
+* Add a security scanner to test stage and test it. Trivy (replaced microscanner) [trivy](https://github.com/aquasecurity/trivy)
 * Add Best Practices from an earlier section, including:
   * Enable BuildKit and try a build.
   * Add tini to images so containers will receive shutdown signals.
