@@ -54,7 +54,7 @@ RUN case ${TARGETPLATFORM} in \
     esac \
     && apt-get -qq update \
     && apt-get -qq install -y ca-certificates wget --no-install-recommends \
-    && wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-${ARCH}.deb \
+    && wget --progress=dot:giga https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-${ARCH}.deb \
     && dpkg -i trivy_${TRIVY_VERSION}_Linux-${ARCH}.deb
 COPY . .
 RUN trivy fs --severity "HIGH,CRITICAL" --no-progress --security-checks vuln .
