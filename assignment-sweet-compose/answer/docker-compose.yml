@@ -6,13 +6,12 @@
 version: '2.4'
 
 services:
-
   traefik:
     image: traefik:1.7-alpine
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "8080:80"
+      - "80:80"
     command:
       - --docker
       - --docker.domain=traefik
@@ -35,17 +34,17 @@ services:
 
   db:
     image: postgres:9.6
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
       - backend
-    healthcheck:
-      test: pg_isready -h 127.0.0.1
+    healthcheck: 
+      test: pg_isready -U postgres -h 127.0.0.1
 
   vote:
     image: bretfisher/examplevotingapp_vote
+    ports:
+      - '5000:80'
     networks:
       - frontend
     depends_on:
@@ -56,11 +55,16 @@ services:
       - traefik.frontend.rule=Host:vote.localhost
 
   result:
-    build:
-      context: ../result
-    command: nodemon index.js
+    build: 
+      context: result
+    command: nodemon --inspect=0.0.0.0:9229 server.js
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '5001:80'
+      - '9229:9229'
     volumes:
-      - ../result:/app
+      - ./result:/app
     networks:
       - backend
     depends_on:
@@ -76,9 +80,9 @@ services:
       - frontend
       - backend
     depends_on:
-      db:
-        condition: service_healthy
       redis:
+        condition: service_healthy
+      db:
         condition: service_healthy
 
 networks:
@@ -87,4 +91,3 @@ networks:
 
 volumes:
     db-data:
-
