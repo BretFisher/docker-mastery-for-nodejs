@@ -10,7 +10,7 @@ of the "result" app using all the things you learned in this section.
 
 ## The finished compose.yml should include
 
-* Set the compose file version to the latest 2.x (done for you)
+* No compose file version! (new as of 2020)
 * Healthcheck for postgres, taken from the depends_on lecture
 * Healthcheck for redis, test command is "redis-cli ping"
 * vote service depends on redis service
