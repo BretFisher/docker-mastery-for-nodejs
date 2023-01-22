@@ -27,7 +27,7 @@ may need to get nodemon into the result image somehow.
 * Enable `NODE_ENV=development` mode for result
 * Enable debug and publish debug port for result
 
-## Things to test once finished to ensure it's working:
+## Things to test once finished to ensure it's working
 
 * Edit ./result/server.js, save it, and ensure it restarts
 * Ensure you never see "Waiting for db" in docker-compose logs, which happens
