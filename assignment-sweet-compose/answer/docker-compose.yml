@@ -88,8 +88,8 @@ services:
         condition: service_healthy
 
 networks:
-    frontend:
-    backend:
+  frontend:
+  backend:
 
 volumes:
-    db-data:
+  db-data:
