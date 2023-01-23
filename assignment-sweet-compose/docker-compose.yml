@@ -1,4 +1,4 @@
-version: '2.4'
+# compose versions are no longer needed for Compose CLI
 
 services:
   redis:
@@ -7,11 +7,12 @@ services:
       - frontend
 
   db:
-    image: postgres:9.6
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
     volumes:
       - db-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
     networks:
       - backend
 
@@ -37,9 +38,8 @@ services:
       - backend
 
 networks:
-    frontend:
-    backend:
+  frontend:
+  backend:
 
 volumes:
-    db-data:
-
+  db-data:

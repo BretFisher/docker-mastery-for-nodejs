@@ -1,9 +1,14 @@
 # this is the answer file for Assignment "Building a Sweet Compose File"
-# you can run it from this answer directory with `docker-compose up`
-# the bind-mount and build paths are changed from the Answer video
-# to work from this subdir
-
-version: '2.4'
+# you can run it from this answer directory with `docker compose up`
+# CHANGES since the video's first release
+# 1. the bind-mount build paths are changed to work from this subdir
+# 2. compose versions are no longer needed for Compose CLI
+# 3. Traefik command format has changed for traefik v2.
+# 4. I now publish the Traefik port on 8080 to avoid issues with people already running something on that host port
+# 5. Traefik has a dashboard that listens on port 8080 inside its container, not to be confused with the docker published port 8080
+# 6. These apps now assume auth to postgres
+# Note, Traefik now has 2.0 versions, which use a different config format
+#       If you'd like to check that out, and try to make it work, I have a repo here: https://github.com/BretFisher/compose-dev-tls
 
 services:
 
@@ -34,9 +39,10 @@ services:
       test: redis-cli ping
 
   db:
-    image: postgres:9.6
+    image: postgres:15-alpine
     environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
@@ -58,7 +64,7 @@ services:
   result:
     build:
       context: ../result
-    command: nodemon index.js
+    command: nodemon server.js
     volumes:
       - ../result:/app
     networks:
@@ -82,9 +88,8 @@ services:
         condition: service_healthy
 
 networks:
-    frontend:
-    backend:
+  frontend:
+  backend:
 
 volumes:
-    db-data:
-
+  db-data:
