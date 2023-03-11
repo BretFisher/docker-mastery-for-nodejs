@@ -11,7 +11,7 @@ WORKDIR /opt
 COPY package*.json ./
 
 RUN npm config list \
-    && npm install --only=production --no-optional \
+    && npm ci \
     && npm cache clean --force
 
 
@@ -28,7 +28,7 @@ ENV PATH=/opt/node_modules/.bin:$PATH
 WORKDIR /opt
 
 RUN npm config list \
-    && npm install --only=development --no-optional \
+    && npm install \
     && npm cache clean --force
 
 WORKDIR /opt/app

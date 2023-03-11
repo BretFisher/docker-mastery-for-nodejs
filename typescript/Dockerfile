@@ -1,11 +1,11 @@
 # a base stage for all future stages
 # with only prod dependencies and
 # no code yet
-FROM node:16-slim as base
+FROM node:18-slim as base
 ENV NODE_ENV=production
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --only=production \
+RUN npm ci \
     && npm cache clean --force
 ENV PATH /app/node_modules/.bin:$PATH
 
@@ -13,7 +13,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 # copy in code since we bind-mount it
 FROM base as dev
 ENV NODE_ENV=development
-RUN npm install --only=development
+RUN npm install
 CMD ["/app/node_modules/.bin/nodemon"]
 
 FROM dev as build
