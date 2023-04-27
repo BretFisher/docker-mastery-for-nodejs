@@ -48,7 +48,7 @@ services:
     networks:
       - backend
     healthcheck:
-      test: pg_isready -h 127.0.0.1
+      test: pg_isready -h 127.0.0.1 -U postgres || exit 1
 
   vote:
     image: bretfisher/examplevotingapp_vote
