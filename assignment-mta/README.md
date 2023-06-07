@@ -6,7 +6,7 @@
 
  It logs to two files in ./logs using Winston module
 
- It requires node v8.x
+ It requires node v14.x
 
  The server need to have GraphicsMagick installed, so 
  you might need to do something like installing with apt:
