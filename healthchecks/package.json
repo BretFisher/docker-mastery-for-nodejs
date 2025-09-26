@@ -10,7 +10,7 @@
   "author": "Bret Fisher",
   "license": "MIT",
   "dependencies": {
-    "@hapi/hapi": "^18.1.0",
+    "@hapi/hapi": "^21.4.3",
     "hapi-pino": "^5.4.1"
   }
 }
