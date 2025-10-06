@@ -74,14 +74,26 @@ FROM test as audit
 
 RUN npm audit
 
-# aqua microscanner, which needs a token for API access
-# note this isn't super secret, so we'll use an ARG here
-# https://github.com/aquasecurity/microscanner
-ARG MICROSCANNER_TOKEN
-ADD https://get.aquasec.com/microscanner /
-RUN chmod +x /microscanner
-RUN apk add --no-cache ca-certificates && update-ca-certificates
-RUN /microscanner $MICROSCANNER_TOKEN --continue-on-failure
+# Trivy security scanner (replaces deprecated microscanner)
+# https://github.com/aquasecurity/trivy
+ENV TRIVY_VERSION=0.35.0
+# Use BuildKit to help translate architecture names
+ARG TARGETPLATFORM
+RUN case ${TARGETPLATFORM} in \
+         "linux/amd64")    ARCH=amd64  ;; \
+         "linux/arm64")    ARCH=arm64  ;; \
+         "linux/arm64/v8") ARCH=arm64  ;; \
+         "linux/arm/v7")   ARCH=arm    ;; \
+         *)                ARCH=amd64  ;; \
+    esac \
+    && apk add --no-cache wget ca-certificates \
+    && update-ca-certificates \
+    && wget --progress=dot:giga https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-${ARCH}.tar.gz \
+    && tar zxf trivy_${TRIVY_VERSION}_Linux-${ARCH}.tar.gz \
+    && mv trivy /usr/local/bin/ \
+    && rm trivy_${TRIVY_VERSION}_Linux-${ARCH}.tar.gz
+COPY . .
+RUN trivy fs --severity "HIGH,CRITICAL" --no-progress --security-checks vuln .
 
 
 ## Stage 6 (default, production)
