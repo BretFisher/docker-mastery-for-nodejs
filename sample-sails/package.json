@@ -8,11 +8,11 @@
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/lodash": "^3.10.4",
     "@sailshq/socket.io-redis": "^5.2.0",
-    "sails": "^1.5.14",
+    "sails": "^1.5.15",
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-organics": "^2.2.1",
     "sails-hook-orm": "^4.0.2",
-    "sails-hook-sockets": "^2.0.3"
+    "sails-hook-sockets": "^3.0.2"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",

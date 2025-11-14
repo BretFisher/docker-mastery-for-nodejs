@@ -8,9 +8,9 @@
   "dependencies": {
     "cookie-parser": "~1.4.7",
     "debug": "~3.1.0",
-    "express": "~4.21.1",
+    "express": "~4.21.2",
     "http-errors": "~1.6.2",
-    "morgan": "~1.9.0",
-    "pug": "^3.0.1"
+    "morgan": "~1.10.1",
+    "pug": "^3.0.3"
   }
 }
